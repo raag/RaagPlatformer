@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
     public Rigidbody2D playerRigidBody;
     public float speed = 1f;
@@ -11,36 +12,44 @@ public class PlayerMovement : MonoBehaviour {
     public Animator playerAnimator;
     public SpriteRenderer spriteRenderer;
 
-    void Start() {
-        
+    void Start()
+    {
+
     }
 
-    void Update() {
+    void Update()
+    {
         playerRigidBody.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, playerRigidBody.velocity.y);
 
         bool isWalking = IsWalking();
         playerAnimator.SetBool("isWalking", isWalking);
-        if(isWalking) {
+        if (isWalking)
+        {
             spriteRenderer.flipX = IsGoingToLeft();
         }
-        
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space)) {
+
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
             playerRigidBody.AddForce(Vector2.up * jumpSpeed);
             isGrounded = false;
             playerAnimator.SetTrigger("Jump");
-        } 
+        }
     }
 
-    private bool IsWalking() {
+    private bool IsWalking()
+    {
         return Input.GetAxis("Horizontal") != 0;
     }
 
-    private bool IsGoingToLeft() {
+    private bool IsGoingToLeft()
+    {
         return Input.GetAxis("Horizontal") < 0;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("ground")) {
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ground"))
+        {
             isGrounded = true;
         }
     }
