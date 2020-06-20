@@ -10,6 +10,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float timeBeforeChange;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    public ParticleSystem collectableParticles;
 
     void Start()
     {
@@ -46,6 +47,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void KillEnemy()
     {
+        collectableParticles.transform.position = transform.position;
+        collectableParticles.Play();
         gameObject.SetActive(false);
     }
 }
