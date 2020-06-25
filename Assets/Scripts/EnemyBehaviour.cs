@@ -10,7 +10,8 @@ public class EnemyBehaviour : MonoBehaviour
     private float timeBeforeChange;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    public ParticleSystem collectableParticles;
+    private ParticleSystem enemyParticles;
+    private AudioSource deadAudio;
 
     void Start()
     {
@@ -18,6 +19,8 @@ public class EnemyBehaviour : MonoBehaviour
         enemyRigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = enemyRigidBody.GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        enemyParticles = GameObject.Find("EnemyParticle").GetComponent<ParticleSystem>();
+        deadAudio = GetComponent<AudioSource>();
 
     }
 
@@ -41,14 +44,15 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && collision.transform.position.y > transform.position.y + 0.3f)
         {
+            deadAudio.Play();
             animator.SetTrigger("KillEnemy");
         }
     }
 
     public void KillEnemy()
     {
-        collectableParticles.transform.position = transform.position;
-        collectableParticles.Play();
+        enemyParticles.transform.position = transform.position;
+        enemyParticles.Play();
         gameObject.SetActive(false);
     }
 }

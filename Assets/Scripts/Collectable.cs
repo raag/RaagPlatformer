@@ -6,11 +6,15 @@ using UnityEngine.UI;
 public class Collectable : MonoBehaviour
 {
     public static int collectableQuantity = 0;
-    public Text collectableQuantityText;
-    public ParticleSystem collectableParticles;
+    private Text collectableQuantityText;
+    private ParticleSystem collectableParticles;
+    private AudioSource collectableAudio;
+
     void Start()
     {
         collectableParticles = GameObject.Find("CollectableParticle").GetComponent<ParticleSystem>();
+        collectableAudio = GameObject.Find("CollectableAudio").GetComponent<AudioSource>();
+        collectableQuantityText = GameObject.Find("CollectableQuantityText").GetComponent<Text>();
     }
 
     void Update()
@@ -23,6 +27,7 @@ public class Collectable : MonoBehaviour
         {
             collectableParticles.transform.position = transform.position;
             collectableParticles.Play();
+            collectableAudio.Play();
             gameObject.SetActive(false);
             collectableQuantity += 1;
             collectableQuantityText.text = collectableQuantity.ToString();

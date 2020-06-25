@@ -8,9 +8,10 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D playerRigidBody;
     public float speed = 1f;
     public float jumpSpeed = 300;
-    bool isGrounded = true;
+    public bool isGrounded = true;
     public Animator playerAnimator;
     public SpriteRenderer spriteRenderer;
+    public AudioSource jumpAudio;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
+            jumpAudio.Play();
             playerRigidBody.AddForce(Vector2.up * jumpSpeed);
             isGrounded = false;
             playerAnimator.SetTrigger("Jump");
